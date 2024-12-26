@@ -16,11 +16,12 @@ router.post("/", async (req, res) => {
       error: "Username, password, and email are required.",
     });
   }
+  const hashedPassword = await bcrypt.hash(password, 10);
 
   // Inserting user's data into the database
-  const [id] = db("users").insert({
+  const [id] = await db("users").insert({
     username,
-    password,
+    password: hashedPassword,
     email,
   });
 
