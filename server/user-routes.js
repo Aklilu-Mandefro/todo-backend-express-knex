@@ -30,6 +30,13 @@ router.post("/", async (req, res) => {
     username,
     email,
   });
+
+  //Check for unique constraint violation
+  if (error.code === 23505) {
+    return res.status(409).json({
+      error: " Username or email already exist.",
+    });
+  }
 });
 
 module.exports = router;
